@@ -1,0 +1,33 @@
+<h2 class="mt-0">2 步快速启动</h2>
+
+<p>创建一个 Markdown 文件。</p>
+
+<syntax-highlight language="bash">
+echo '# 页面标题' > index.md
+</syntax-highlight>
+
+<details class="details-expand-bg details-rounded">
+	<summary>Eleventy 需要 Node.js <node-minimum></node-minimum> <em>(展开以了解更多信息)</em></summary>
+	<p>你可以通过在终端窗口中运行 `node --version` 来检查是否安装了 Node。(<a href="/docs/terminal-window/"><em>好了，等等——什么是终端窗口？</em></a>)</p>
+	<p>如果找不到该命令或者它报告的数字低于 <node-minimum></node-minimum>，则需要在继续执行下一步之前 <a href="https://nodejs.org/en/download/">下载并安装 Node.js</a>。</p>
+</details>
+
+<p>运行 Eleventy。</p>
+
+<syntax-highlight language="bash">
+npx @11ty/eleventy
+</syntax-highlight>
+
+<p>Eleventy 将当前目录中与有效 <a href="/docs/languages/">文件扩展名</a>（<code>.md</code> 是其中之一）匹配的任何文件编译到输出文件夹（默认情况下为 <code>_site</code>）。它可能如下所示：</p>
+
+<cli-eleventy-output @show-version>
+正在从 ./index.md 编写 _site/index.html (liquid)
+在 0.03 秒内编写了 1 个文件
+</cli-eleventy-output>
+
+<p>运行 <code>npx @11ty/eleventy --serve</code> 以启动 <a href="/docs/dev-server/">本地开发服务器</a>，并在你选择的网络浏览器中打开 <code>http://localhost:8080/</code> 以查看你的网站。</p>
+
+<ul>
+	<li>请在文档中阅读我们的完整 <a href="/docs/"><strong>快速入门指南</strong></a>。</li>
+	<li>观看 <a href="https://www.youtube.com/watch?v=kzf9A9tkkl4"><strong>从头开始建立一个博客的 6 分钟指南</strong></a>。</li>
+</ul>

@@ -1,0 +1,12 @@
+/* Testimonials */
+.testimonials-layout.fl {
+	--fl-gap-h: 2em;
+	--fl-gap-v: 2em;
+}
+.testimonials-layout.fl > * {
+	flex-basis: 25em; /* 400px /16 */
+}
+.testimonials blockquote,
+.testimonials blockquote > p:first-child:last-child {
+	margin: 0;
+}

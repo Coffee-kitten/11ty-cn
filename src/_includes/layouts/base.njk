@@ -1,0 +1,147 @@
+---node
+// <script>
+let title = "Eleventy is a simpler static site generator";
+
+let social = {
+	imgsrc: "https://www.11ty.dev/img/open-graph.jpg",
+	imgalt: "The 11ty logo text with a small floating possum on a balloon"
+};
+
+let domain = process.env.URL || "https://www.11ty.dev";
+
+// For things that rely on the data cascade
+let eleventyComputed = {
+	social: {
+		imgsrc: function({ domain, page }) {
+			return `https://v1.screenshot.11ty.dev/${encodeURIComponent(domain + page.url)}/opengraph/_cachebust/`;
+		},
+		imgalt: function({ domain, page }) {
+			return `A screenshot of the web page at ${domain + page.url}`;
+		},
+		description: function({ versions, config }) {
+			return `A docs page for Eleventy ${this.latestVersion(versions, config)}, a simpler static site generator.`;
+		}
+	}
+};
+---
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		{%- set subtitle %}{{ newstitle or searchTitle or relatedTitle or tiptitle or eleventyNavigation.key or title }}{% endset %}
+		{%- set subtitleText %}{{ subtitle }}{% if subtitle and subtitle != "Eleventy is a simpler static site generator" %} — Eleventy{% endif %}{% endset %}
+		<title>{{ subtitleText }}</title>
+		<meta name="description" content="{{ subtitleText }}">
+		<meta name="generator" content="{{ eleventy.generator }}">
+
+		<link rel="icon" type="image/png" sizes="96x96" href="/img/favicon.png">
+		<link rel="me" href="https://fosstodon.org/@eleventy">
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://www.11ty.dev{{ page.url }}">
+		<meta property="og:site_name" content="Eleventy">
+		<meta property="og:locale" content="en_US">
+		<meta property="og:title" content="{{ subtitle }}">
+		<meta property="og:description" content="{{ social.description }}">
+		<meta property="og:image" content="{{ social.imgsrc }}">
+		<meta property="og:image:width" content="1280">
+		<meta property="og:image:height" content="640">
+		<meta property="og:image:alt" content="{{ social.imgalt }}">
+
+		<!-- Feeds -->
+{%- if not feedExclusive %}
+		<link rel="alternate" href="/blog/feed.xml" title="Eleventy Blog" type="application/atom+xml">
+		<link rel="alternate" href="/firehose/firehose.rss" title="Eleventy Firehose" type="application/rss+xml">
+{%- endif %}
+{%- if feedTitle and feedUrl %}
+		<link rel="alternate" href="{{ feedUrl }}" title="{{ feedTitle }}" type="application/atom+xml">
+{%- endif %}
+
+{%- set css %}
+{% include 'components/font-titles.css' %}
+{% include 'index.css' %}
+{% include 'components/navigation.css' %}
+{% include 'components/announcement.css' %}
+{% include 'components/external-links.css' %}
+{% include 'components/toc.css' %}
+{% include "components/minilink.css" %}
+{# Sidebar ad for 11ty conf #}
+{% include 'components/callout.css' %}
+{# TODO convert to WebC #}
+{% include 'components/grid-layout.css' %}
+
+{% if not skipLegacyBundle %}
+	{# these components are not yet used on WebC pages #}
+	{% include 'components/direct-links.css' %}
+	{% include 'components/breadcrumb.css' %}
+	{% include 'components/seven-minute-tabs.css' %}
+
+	{# these components have been converted to WebC #}
+	{% include 'components/prism-theme.css' %}
+	{% include 'components/code.css' %}
+	{% include 'components/inline-code.css' %}
+	{% include 'components/layout.css' %}
+	{# TODO reference these directly from node_modules at some point #}
+	{% include 'components/flex-luthor/flex-luthor.css' %}
+	{% include 'components/flex-luthor/flex-luthor-separators.css' %}
+	{% include 'components/testimonials.css' %}
+	{% include 'components/possum.css' %}
+	{% include 'components/possum-home.css' %}
+
+	/* Filters */
+	.filter-tags--hide {
+		display: none;
+	}
+	.select-filter {
+		font-size: 16px;
+		padding: .3em .5em;
+	}
+
+	{{ robotoMonoGoogleFontsCss | safe }}
+{% endif %}
+{% endset %}
+
+		<!-- Preconnect -->
+		<link href="https://v1.indieweb-avatar.11ty.dev" rel="preconnect" crossorigin>
+		<link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+
+		<style>{{ css | cssmin | safe }}</style>
+		<style>{% getBundle "css" %}</style>
+{%- if useWebCBundle %}
+		<link rel="stylesheet" href="{% getBundleFileUrl 'css', 'async' %}" fetchpriority="low">
+{%- endif %}
+
+{%- if not skipLegacyBundle %}
+{%- if page.inputPath.endsWith(".webc") %}
+		<link rel="stylesheet" href="/css/async-webc.css" fetchpriority="low">
+{%- elseif config.env === "production" %}
+		<link rel="stylesheet" href="/css/async.css" media="print" onload="this.media='all'" fetchpriority="low">
+		<noscript>
+			<link rel="stylesheet" href="/css/async.css" fetchpriority="low">
+		</noscript>
+{%- else %}
+		<link rel="stylesheet" href="/css/async.css" fetchpriority="low">
+{%- endif %}
+{%- endif %}
+		<script>{% include "components/details-force-state.js" %}</script>
+	</head>
+	<body>
+		{{ content | safe }}
+
+		<!-- Built on {{ config.now }} by Eleventy -->
+{% if loadNetlifyIdentity %}
+		<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+{% endif %}
+{%- if useWebCBundle %}
+		<script type="module" src="{% getBundleFileUrl 'js', 'async' %}"></script>
+{%- endif %}
+{%- if not skipLegacyBundle %}
+		<script src="/js/eleventy.js" type="module"></script>
+{%- endif %}
+{% if not skipAuth %}
+		<script src="/js/eleventy-auth.js" type="module"></script>
+{% endif %}
+	</body>
+</html>

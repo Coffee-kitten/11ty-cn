@@ -1,0 +1,7 @@
+{
+	"url": "https://github.com/MaybeThisIsRu/smix-eleventy-starter",
+	"name": "Smix",
+	"description": "A standards-respecting starter kit for Eleventy. Go Indie. Uses PostCSS and esbuild.",
+	"author": "hirusi",
+	"demo": "https://smix.netlify.app/"
+}

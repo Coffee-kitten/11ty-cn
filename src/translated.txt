@@ -1,0 +1,147 @@
+---
+eleventyNavigation:
+  parent: Getting Started
+  key: Glossary
+  order: 1.4
+---
+
+# 词汇表
+
+此页面提供了两个术语列表——一个是[Eleventy 特有术语](#eleventy-specific-terminology)，可在使用 Eleventy 构建项目时提供帮助，另一个是[行业术语](#industry-terms-and-buzzwords)，有助于理解内容。
+
+_进行中：{% include "edit-on-github.njk" %}_
+
+## Eleventy 特有术语
+
+### 模板
+
+使用[诸如 Markdown、HTML、Liquid、Nunjucks 等格式](/docs/languages/)编写的文本文件，Eleventy 将其转换成构建站点中的页面（或页面）。模板可以使用模板语法访问通过[数据级联](#data-cascade)公开的[数据](#data)。
+
+### 布局
+
+包围另一个模板的模板，通常用于提供内容嵌入其中的支架标记。
+
+[阅读有关使用布局的更多信息。](/docs/layouts/)
+
+### 数据
+
+通过变量公开，可以使用模板语法在[模板](#template)和[布局](#layout)中使用。给定模板的数据通过称为[数据级联](#data-cascade)的过程聚合。
+
+### 数据级联
+
+Eleventy 为评估任何给定[模板](#template)的所有[数据](#data)和解决产生的冲突而执行的操作顺序。数据级联遵循尽可能少修改的原则，因此广泛定义为适用于多个模板的数据会被更具体地针对给定模板的数据覆盖。
+
+[阅读有关数据级联的更多信息。](/docs/data-cascade/)
+
+### 筛选器
+
+可以在模板语法中使用的函数，用于将[数据](#data)转化为更美观的格式。筛选器通常设计为链式，以便从一个筛选器返回的值被传输到下一个筛选器。
+
+[阅读有关筛选器的更多信息。](/docs/filters/)
+
+### 代码块
+
+可以在模板语法中使用的函数，用于将内容注入模板。代码块可以采用多个参数，可以看作是可重用标记的模板化方法。
+
+[阅读有关代码块的更多信息。](/docs/shortcodes/)
+
+### 集合
+
+[模板](#template)的数组，用于对类似的内容分组。可以通过使用[标签](/docs/collections/#tag-syntax)或调用[Eleventy 配置中的集合 API](/docs/collections/#advanced-custom-filtering-and-sorting)来创建集合。
+
+[阅读有关集合的更多信息。](/docs/collections/)
+
+### 分页
+
+通过迭代数据来创建页面的方法。将同一模板应用于分页数据中的每个块。
+
+[阅读有关分页的更多信息。](/docs/pagination/)
+
+### 插件
+
+便于移植和安装的 Eleventy 配置，可以向项目的设置添加[数据](#data)、[筛选器](#filter)、[代码块](#shortcode)等。
+
+[阅读有关插件的更多信息。](/docs/plugins/)
+
+### Eleventy Edge
+
+Eleventy 中的嵌入式代码块，其中可以将动态功能部分与构建生成的或无服务器模板结合使用。
+
+[阅读有关 Eleventy Edge 的更多信息。](/docs/plugins/edge/)
+
+### Eleventy Serverless
+
+Eleventy 中的一种嵌入式构建模式，其中指定页面在用户请求时构建，而不是在构建步骤中提前构建。或者，可以由内容交付网络缓存按请求构建的页面，以便用于将来访问该页面。
+
+[阅读有关 Eleventy Serverless 的更多信息。](/docs/plugins/serverless/)
+
+## 行业术语和流行语
+
+沉浸在这个温暖的光芒中，这种风格让人感觉_“没有人因为购买 IBM 而被解雇”_，享受这种行业术语。
+
+我们的行业特别擅长为已存在的事物发明新词。希望此页面能帮助你驾驭迷宫。
+
+### 静态网站
+
+静态网站是一组生成的 HTML 文件。内容构建在 HTML 文件中，而不是使用动态后端语言即时生成内容。添加缓存规则以使内容更稳定时，动态网站可能会显示为静态。快速且频繁地运行构建时，静态网站可能会显示为动态。
+
+### Jamstack
+
+> 现代 Web 开发架构基于客户端 JavaScript、可重用 API 和预构建标记。—[jamstack.org](https://jamstack.org/)
+
+Eleventy 便于构建 Jamstack 网站——但是你可以完全控制 JavaScript。
+
+### 渐进增强
+
+<!-- 你在这里很安全。但是，一个对渐进增强友好的静态网站生成器仅仅是一个开始。 -->
+
+内容应该是网站开发的优先事项。换句话说，从仅使用尽可能多用户可以使用的基本内容和功能开始，然后逐步进行增强。
+
+如[MDN Web 文档](https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement)中所述：“应特别注意可访问性。尽可能应提供可接受的替代方案。”
+
+### 数据驱动
+
+使组件和标记数据驱动，这样你就不必在项目中到处粘贴大量一次性的 HTML 实例。
+
+### 无服务器友好
+
+> “你可以运用你的前端技能来做通常只有后端才能做的事情。你可以编写一个 JavaScript 函数，通过访问 URL 来运行并接收响应。”——[无服务器的力量](https://serverless.css-tricks.com/)，作者：[克里斯·科伊尔]({{ "https://twitter.com/chriscoyier" | canonicalTwitterUrl }})
+
+务必要确保<span class="buzzword">无服务器</span>函数为<span class="buzzword">渐进增强</span>。如果你在客户端 JavaScript 中调用<span class="buzzword">无服务器</span>函数，则应将其用于网站核心功能之外的功能。使用[Eleventy Serverless](/docs/plugins/serverless/)按请求生成页面，而无需任何客户端 JavaScript。
+
+### 精益 Web
+
+老实说，将精益方法与这个项目联系起来有些牵强，但这个词的感觉很对。
+
+### 零配置
+
+零配置意味着 Eleventy 可以在没有任何命令行参数或配置文件的情况下运行。
+
+我们已仔细设置 Eleventy，以便运行现成`eleventy`命令使用明智的默认值。降低第一个项目构建的进入门槛，以便更快地启动并运行。
+
+### 约定优于配置路由
+
+你能相信一些框架需要一个集中的配置部分来进行路由？`eleventy`路由映射文件系统，除非你使用`permalink`覆盖。
+
+### 默认预渲染模板
+
+随着 JavaScript 中模板客户端渲染的兴起，出现了重大的性能问题，特别是对于使用功能较弱（但仍然是现代）硬件的用户。你知道他们正在销售硬件受限的新移动设备吗？
+
+许多框架切换到服务器端渲染，这意味着运行一个应用程序服务器，该服务器会根据每个请求按需渲染标记。默认情况下，Eleventy 模板在构建时会生成（有些人称之为预渲染），以实现最佳性能。这样，Web 服务器只需要获取静态文件并将其发送回用户。
+
+- 如果你想向 Eleventy 项目添加动态服务器端功能，请在构建或服务器生成的模板之上使用[Eleventy Edge](/docs/plugins/edge/)。
+- Eleventy 还可以以[Serverless 模式](/docs/plugins/serverless/)运行，用于在服务器端按需渲染甚至“按需渲染一次并为后续访问者缓存”。
+
+### 无需水化
+
+嗯，呃，我们在 Eleventy 中不注入或使用任何客户端 JavaScript，因此不需要任何水化。
+
+### 应用程序而非应用服务器
+
+应用程序服务器可能会很慢。不要使用 PHP、Java 甚至 Node.js 在请求进入时动态生成页面响应，而是让预渲染模板随时准备交付！最大性能。
+
+### 单页面应用程序 (SPA) 与多页面应用程序 (MPA)
+
+单页面应用程序 (SPA) 使用 JavaScript 来启用网站上的页面之间的导航。多页面应用程序使用 Web 的经典导航模型，并对新页面进行完整的页面刷新。
+
+你应该[使用 Eleventy 构建单页面应用程序](/docs/single-page-applications/)吗？

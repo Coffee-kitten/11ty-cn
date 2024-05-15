@@ -1,0 +1,42 @@
+<div class="elv-toc" data-pagefind-ignore>
+{%- set adTitle = "<a href='https://conf.11ty.dev/' class='elv-externalexempt'>11ty Conference</a> — May 9" %}
+{%- callout "pinned", "html", adTitle %}
+<p>Join the <a href="https://conf.11ty.dev/" class="elv-externalexempt"><strong>11ty International Symposium on Making Web Sites Real Good</strong></a>.</p>
+{%- endcallout %}
+{%- set versionsTitle = "<a href='/docs/versions/'>Versions</a>" %}
+{%- callout "box", "html", versionsTitle -%}
+	<dl>
+		<dt>Stable</dt>
+		<dd><code>{{ npmVersions.latest }}</code></dd>
+		<dt>Canary</dt>
+		<dd><code>{{ npmVersions.canary }}</code></dd>
+	</dl>
+{%- endcallout %}
+
+<details-force-state>
+	<details>
+		<summary class="btn-primary benchnine rainbow-active rainbow-active-noanim">Toggle Menu</summary>
+
+		{%- if eleventyNavigation -%}
+			{%- set navKey = eleventyNavigation.key -%}
+		{%- endif -%}
+		<div id="skip-nav">
+			{{ collections.sidebarNav | eleventyNavigation | eleventyNavigationToHtml({ activeKey: navKey, listClass: 'elv-toc-list', activeListItemClass: 'elv-toc-active' }) | safe }}
+		</div>
+		{%- if not ignoreSidebarCallout %}
+		{%- set comparison = comparisons | randompick %}
+		{%- set comparisonTitle = "<a href='" + comparison.url + "'>Compare " + comparison.title + "</a>" %}
+		{%- callout "box", "html", comparisonTitle %}
+		<is-land on:visible on:media="(prefers-reduced-motion: no-preference)">
+			<template data-island="once"><link rel="stylesheet" href="/css/throbber.css" webc:keep><script src="/js/throbber.js" webc:keep></script></template>
+			<div><strong>Eleventy</strong> <code>{{ comparison.eleventy.readable }}</code></div>
+			{# this isn’t WebC so it doesn’t show the fallback content #}
+			<text-throbber interval="1000" duration="{{ comparison.eleventy.ms }}"></text-throbber>
+			<div><strong>{{ comparison.other.label }}</strong> <code>{{ comparison.other.readable }}</code></div>
+			<text-throbber interval="1000" duration="{{ comparison.other.ms }}"></text-throbber>
+		</is-land>
+		{%- endcallout %}
+		{%- endif %}
+	</details>
+</details-force-state>
+</div>

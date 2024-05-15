@@ -1,0 +1,33 @@
+---
+eleventyNavigation:
+  parent: Community
+  key: Authors
+  order: 2
+layout: layouts/docs.njk
+---
+<h1>Eleventy Authors</h1>
+
+<ul>
+  <li>×{{ authors | length }} unique authors.</li>
+  <li>Want to add your name below? Head over to the <a href="https://github.com/11ty/11ty-community/issues/new/choose"><code>11ty-community</code> issue tracker</a>.</li>
+</ul>
+
+<table class="authors-list">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Site Count</th>
+      <th>Supporter</th>
+    </tr>
+  </thead>
+	<tbody>
+{%- for author in authors | sortAuthors %}
+{%- set supporter = opencollective.supporters | isSupporter(author.name, githubTwitterMap[author.name], author.opencollective) -%}
+		<tr>
+			<td><a href="/authors/{{ author.name | slug }}/">{% communityavatar author.name %}{{ supporter.name or author.name | friendlyAuthorName | safe }}</a></td>
+			<td>{% if author.sites.length > 1 %}×{{ author.sites.length }} sites{% endif %}</td>
+			<td>{% if supporter %}🎈{% endif %}</td>
+		</tr>
+{%- endfor %}
+	</tbody>
+</table>

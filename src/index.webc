@@ -1,0 +1,180 @@
+---node
+// <script>
+let layout = "layouts/main.njk";
+let logoLink = "/docs/";
+
+let useWebCBundle = true;
+let skipLegacyBundle = true;
+
+// Update the emoji in CSS
+// let logoLink = "/blog/eleventy-v2/"
+// let logoContent = "<span class='elv-hero-content'>2.0</span>"
+
+let ignoreGitHubButtons = true;
+let ignoreSupporters = true;
+let ignoreSidebarCallout = true;
+let searchTitle = "Eleventy is a simpler static site generator";
+let skipAuth = true;
+
+let eleventyImport = {
+	collections: ["blog"]
+};
+
+let eleventyComputed = {
+	social: {
+		description: () => "Eleventy is a simpler static site generator."
+	},
+};
+// </script>
+---
+<script webc:setup>
+function getHighlightedBlogPostContent(collection) {
+	let posts = findBy(collection, 'data.homePageHighlight', true);
+	if(!posts.length) {
+		return "";
+	}
+	posts.reverse();
+
+	let content = [];
+	let index = 0;
+	for(let post of posts) {
+		content.push(`<li><a href="${post.url}">${index === 0 ? `<strong>` : ""}${post.data.newstitle}${index === 0 ? `</strong>` : ""}</a> (<em>${newsDate(post.date)}</em>)</li>`);
+		index++;
+	}
+	// 10 hardcoded posts on the blog
+	content.push(`<li>…and <a href="/blog/">${collection.length + 10 - posts.length} more on the <strong>blog archives</strong></a>.</li>`)
+
+	return `${content.join("")}`;
+}
+
+function randomTestimonialLink(testimonials) {
+	let featuredOnly = testimonials.filter(entry => entry.featured && !entry.filteredFromRandomPick);
+	let random = randompick(featuredOnly);
+	let slug = slugify(random.name);
+
+	return `What is <a href="/docs/testimonials/#${slug}">${testimonialNameHtml(random)} saying about Eleventy?</a>`;
+}
+</script>
+
+<!-- css-only components -->
+<possum variant="home" webc:nokeep></possum>
+
+<!-- this is a workaround for the layout used in the header -->
+<flex-luthor webc:nokeep></flex-luthor>
+
+<quick-start></quick-start>
+
+<div webc:bucket="async">
+	<sponsors-list></sponsors-list>
+
+	<h2>News from the Blog</h2>
+	<ul @html="getHighlightedBlogPostContent(collections.blog)"></ul>
+
+<h2>博客新闻</h2>
+<ul @html="getHighlightedBlogPostContent(collections.blog)"></ul>
+
+<h2>为何应使用 Eleventy？</h2>
+<ul>
+	<li>
+		Eleventy 具备 <a href="/docs/performance/"><strong>构建速度快且网站速度更快的优势<strong>。</a>
+		<is-land on:visible on:media="(prefers-reduced-motion: no-preference)">
+			<build-comparison variant="home"></build-comparison>
+		</is-land>
+	</li>
+	<li>
+		Eleventy 已<strong>准备就绪投入生产</strong>，并受到以下组织的信赖：
+		<is-land on:visible on:save-data="false">
+			<logo-cloud></logo-cloud>
+		</is-land>
+		<small>Eleventy 已被下载 <a href="/blog/eight-million/">超过 800 万次</a>，并于 <a href="https://github.com/11ty/eleventy/network/dependents">70,000 多个 GitHub 资源库</a></a>中使用。</small>
+	</li>
+	<li>
+		Eleventy 提供<strong>对项目输出的完全控制</strong>。我们不会 <a href="https://www.youtube.com/watch?v=b4frtsT4Cgo">向您的页面中注入我们自己的标记</a>。
+	</li>
+	<li>
+		Eleventy 拥有一个 <a href="/docs/community/">非常棒的关心他们所构建内容的人士社区</a>。<em>@html="randomTestimonialLink(testimonials)"</em>
+	</li>
+	<li>
+		<a href="/blog/stability/">Eleventy <strong>稳定</strong></a>。我们已发布 <span @text="getsize(versions) - 1"></span> 个版本，可追溯到 2017 年 12 月发布的第一个版本，并且只有两个版本有需要开发人员进行更改的 Eleventy 特定更改。
+		<blockquote>
+			<p>a11yproject.com 在 1.0.0 版本下推出 Eleventy。[…] 过去三年稍短，不必对依赖项进行任何调整，它仍然可以安装并从初始状态运行，而不会出现任何复杂情况。在我更新后使用 2.0.0 版本，我实际上会移除依赖项，不会添加更多。[…] 这种情况很少见，很独特。——<a href="https://social.ericwbailey.website/@eric/109914908787346813"><img webc:is="indieweb-avatar" url="https://ericwbailey.design/"> Eric Bailey</a></p>
+		</blockquote>
+	</li>
+	<li>
+		Eleventy <strong>不会追踪您</strong>。我们 <a href="https://www.zachleat.com/web/site-generator-review/#telemetry">没有也不使用遥测，也不要求您选择退出数据收集</a>。
+	</li>
+	<li>
+		Eleventy <strong><a href="/docs/glossary/#zero-config" class="buzzword">零配置</a></strong>，可通过灵活的配置选项进行扩展。
+	</li>
+	<li>
+		Eleventy <strong>可使用多重模板语言</strong>。您可以选择其中一种，或在单个项目中同时使用所有这些语言：<lists webc:nokeep><template webc:type="11ty" 11ty:type="njk,md" webc:raw webc:nokeep>{% templatelangs templatetypes, page %}</template></lists>
+	</li>
+	<li>
+		Eleventy 使用<strong>独立的模板语言</strong>。我们不想使用自定义格式来绑架您的内容。如果您决定稍后使用不同的语法，以这种方式分离内容将使迁移变得更加容易。
+	</li>
+	<li>
+		Eleventy <strong>不要求您使用 JavaScript 框架</strong>——这意味着**默认情况下<em>完全没有客户端 JavaScript</em>。我们<strong>着眼长远</strong>，选择退出框架竞赛。您在前段堆栈中使用的工具链、模块和组件都与该工具分离。从 <a href="/docs/glossary/#pre-rendered-templates-by-default" class="buzzword">预渲染模板</a>的稳定基础着手，满足您的项目中 <a href="/docs/glossary/#progressive-enhancement" class="buzzword">渐进式增强</a> 的基本要求。
+	</li>
+	<li>
+		Eleventy <strong>与您的项目的现有目录结构协作</strong>。该工具不需要 <code>app</code> 目录或 <code>pages</code> 目录。使用您想要的结构。
+	</li>
+	<li>
+		Eleventy 允许<strong>逐步采用</strong>。我们只会 <a href="/docs/config/#template-formats">查找文件</a>和 <a href="/docs/config/#input-directory">目录</a>。此外，您还可以更加精确地 <a href="/docs/ignores/">选择退出或忽略项目中的特定文件</a>。您不必从头开始参与 Eleventy 项目。Eleventy 足够灵活，可以一次仅转换少量模板。按照您希望的速度进行迁移。
+	</li>
+</ul>
+
+<p><a href="/docs/"><strong>今天就使用 Eleventy！</strong></a>或阅读更多有关 <a href="https://www.zachleat.com/web/introducing-eleventy/">Eleventy 项目目标</a>。</p>
+
+<is-land on:visible on:save-data="false">
+	<template data-island>
+		<h2><a href="https://opencollective.com/11ty">开放集合组织</a>支持者</h2>
+		<facepile webc:nokeep>
+			<html-fetch src="/imports/supporters.html" show-gold-sponsors></html-fetch>
+		</facepile>
+	</template>
+</is-land>
+
+<giant-docs-button></giant-docs-button>
+<giant-docs-button-subtext></giant-docs-button-subtext>
+
+
+<h2>鸣谢 Eleventy</h2>
+
+<sites-list-njk :@sites="builtwith"></sites-list-njk>
+
+<is-land on:visible on:save-data="false">
+	<facepile>
+		<html-fetch src="/imports/facepile.html"></html-fetch>
+	</facepile>
+</is-land>
+
+<p>显示 <code>110</code> 个作者的示例。查看 <a href="/speedlify/"><code><span @text="getsize(objectFilterNot(builtwith, 'disabled'))" webc:nokeep></span></code> 个网站的完整列表</a>。</p>
+
+<h2>不要相信我的话 <emoji @char="🌈" @alt="彩虹"></emoji></h2>
+
+<p>来听听以下 <a href="/docs/testimonials/">快乐开发者</a>如何评价 Eleventy：</p>
+
+<testimonials-list :@testimonials="testimonials"></testimonials-list>
+
+<p><a href="/docs/testimonials/">…还有更多！</a></p>
+
+<h2>替代方案</h2>
+
+<p>此项目旨在与其他所有静态网站生成器直接竞争。我们鼓励您尝试其他一些产品：</p>
+
+	<lists webc:nokeep>
+		<ul class="inlinelist">
+			<li class="inlinelist-item"><a href="https://jekyllrb.com/">Jekyll (Ruby)</a></li>
+			<li class="inlinelist-item"><a href="https://gohugo.io/">Hugo (Go)</a></li>
+			<li class="inlinelist-item"><a href="https://hexo.io/">Hexo (JavaScript)</a></li>
+			<li class="inlinelist-item"><a href="https://www.gatsbyjs.org/">Gatsby (JavaScript using React)</a></li>
+			<li class="inlinelist-item"><a href="https://nuxtjs.org/">Nuxt (JavaScript using Vue)</a></li>
+			<li class="inlinelist-item"><a href="https://nextjs.org/">Next.js (JavaScript using React)</a></li>
+			<li class="inlinelist-item"><a href="https://www.bridgetownrb.com/">Bridgetown (Ruby)</a></li>
+			<li class="inlinelist-item"><a href="https://astro.build/">Astro (JavaScript)</a></li>
+			<li class="inlinelist-item"><a href="https://remix.run/">Remix (JavaScript using React)</a></li>
+			<li class="inlinelist-item"><a href="https://kit.svelte.dev/">SvelteKit (JavaScript using Svelte)</a></li>
+			<li class="inlinelist-item"><em>More at <a href="https://jamstack.org/generators/">jamstack.org</a></em></li>
+		</ul>
+	</lists>
+</div>

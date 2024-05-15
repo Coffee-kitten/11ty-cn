@@ -1,0 +1,33 @@
+---
+subtitle: "Eleventy Super Professional Business Network 💼"
+layout: layouts/docs.njk
+---
+<h1>Eleventy Super Professional Business Network {% emoji "💼" %}</h1>
+
+<p>Welcome to all people that are willing to spend money in exchange for business services! The <strong>Eleventy Super Professional Business Network</strong> is a very professional network of web developers in the Eleventy community that are available for hire! You can see the Eleventy web sites they have built and click the business button to do very professional business with them. <em>The order below is random.</em></p>
+
+<div class="business-network">
+{%- for author in authors | filterBusinessPeople | shuffle %}
+{%- set supporter = opencollective.supporters | isSupporter(author.name, githubTwitterMap[author.name], author.opencollective) -%}
+{%- if supporter | isBusinessPerson %}
+  <div class="business-network-primary fl">
+    <div>
+      <a href="{{ author.business_url }}" class="business-network-name nowrap">{% indieavatar author.business_url, "avatar-large" %}{{ author.business_name or author.name }}</a>
+    </div>
+    <div class="business-network-hire">
+      <a href="{{ author.business_url }}" class="btn-primary btn-primary-standard benchnine rainbow-active rainbow-active-noanim elv-externalexempt">Let’s Do Business</a>
+    </div>
+  </div>
+  <div>
+  {%- if author.sites.length %}
+  <div class="business-network-sites lo-grid lo-grid-fill" style="--fl-gap-h: .25rem; --fl-gap-v: .25rem; --lo-c-minwidth: 75px;">
+  {%- for site in author.sites %}
+    <div><a href="{{ site.url }}" class="elv-externalexempt">{%- getScreenshotHtml site.fileSlug, site.url, "80px" -%}</a></div>
+  {%- endfor %}
+  </div>
+  {%- endif %}
+{%- endif %}
+{%- endfor %}
+</div>
+
+<p><strong><a href="/blog/espbn/">Want to be on this list?</a></strong></p>

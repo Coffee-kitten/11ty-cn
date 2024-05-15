@@ -1,0 +1,67 @@
+---
+eleventyNavigation:
+  key: Performance
+  parent: Getting Started
+  excerpt: The build and site performance of Eleventy projects
+  order: 3
+ignoreSidebarCallout: true
+---
+<template webc:type="11ty" 11ty:type="njk,md" webc:raw webc:nokeep>
+# Eleventy Performance
+
+Eleventy 以其轻量级核心而闻名，表现为快速的安装/构建，轻量级站点输出表现为快速站点！
+
+## 站点性能
+
+Eleventy 允许你完全控制输出。这也意味着我们默认不包括任何通常会妨碍站点性能的昂贵的运行时 JavaScript 捆绑包！
+
+{% callout "", "md" %}来看看我们的全新 [部分水化 `<is-land>` 组件](/docs/plugins/partial-hydration/)！{% endcallout %}
+
+[Eleventy 排行榜](/speedlify/) 上列出的站点每月都会进行测试和排名（大约每月一次），作为社区的一种有趣方式来维护 Eleventy 站点的快速站点性能。
+
+* 想 [将你的站点添加到排行榜](/docs/leaderboards-add/)？
+
+<div class="youtube-related">
+  {%- youtubeEmbed "b4frtsT4Cgo", "对 HTML 的完全控制" -%}
+  {%- youtubeEmbed "dIa2Y4zesnw", "将你的网站添加到排行榜（第 6 周）" -%}
+</div>
+
+寻找有关 [单页应用程序 (SPA)](/docs/single-page-applications/) 的指南？
+
+## 构建性能
+
+**Eleventy 为 JavaScript 站点生成器提供了同类最佳的构建性能。**
+</template>
+
+<is-land on:visible on:media="(prefers-reduced-motion: no-preference)">
+	<template data-island="once"><link rel="stylesheet" href="/css/throbber.css" webc:keep><script src="/js/throbber.js" webc:keep></script></template>
+	<build-comparison @show-all></build-comparison>
+</is-land>
+
+<template webc:type="11ty" 11ty:type="njk,md" webc:raw webc:nokeep>
+数据取自 [谁的生成器能最快构建 Markdown？](https://www.zachleat.com/web/build-benchmark/#benchmark-results)（2022 年 7 月）。
+
+### 性能技巧
+
+* 你可以使用 [调试模式](/docs/debug-performance/) 来分析你 [项目特定的构建性能指标。](/docs/debug-performance/)
+* [目录输出插件](/docs/plugins/directory-output/) 还会报告每个模板的性能和文件大小信息。
+* 在 [Eleventy 开发服务器](/docs/copy/#emulate-passthrough-copy-during-serve) 中从构建循环中提取 [直通复制](/docs/copy/)。
+* 为增量构建使用 [`--incremental`](/docs/usage/#incremental-for-partial-incremental-builds)。
+
+<div class="youtube-related">
+  {%- youtubeEmbed "KETQ4zS9Yp4", "Google 的 web.dev 构建时间性能提升 28%（第 1 周）", "30" -%}
+  {%- youtubeEmbed "kUC87Zr0dKg", "Eleventy 构建从 54 秒缩短到 17 秒——分页内存/性能获胜 🏆（第 10 周）", "344" -%}
+  {%- youtubeEmbed "sfPNgt3joWI", "Markdown 基准（第 16 周）", "1566" -%}
+</div>
+
+## 安装性能
+</template>
+
+<is-land on:visible on:media="(prefers-reduced-motion: no-preference)">
+	<template data-island="once"><link rel="stylesheet" href="/css/throbber.css" webc:keep><script src="/js/throbber.js" webc:keep></script></template>
+	<install-comparison></install-comparison>
+</is-land>
+
+<template webc:type="11ty" 11ty:type="njk,md" webc:raw webc:nokeep>
+数据取自 [JavaScript 站点生成器评论，2023](https://www.zachleat.com/web/site-generator-review/)（2023 年 2 月）。
+</template>
