@@ -1,0 +1,75 @@
+<h1>Command Line Usage</h1>
+<p><strong>Prerequisites:</strong></p>
+<ol>
+<li>Eleventy runs in a Terminal window. <a href="/docs/terminal-window/"><em>Well, wait—what is a Terminal window?</em></a></li>
+<li>Have you already <a href="/docs/">installed Eleventy</a>?</li>
+</ol>
+<hr>
+<p>Here’s the first command you can enter in your Terminal window to run Eleventy:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Searches the current directory, outputs to ./_site</span><br>npx @11ty/eleventy</code></pre>
+<div class="elv-callout elv-callout-warn"><div class="elv-callout-label">WARNING:</div><div class="elv-callout-c">Make sure you always use <code>npx @11ty/eleventy</code> (including the <code>@11ty/</code> prefix!). If you do not include the <code>@11ty/</code> prefix and you don’t already have Eleventy installed (locally or globally), it will execute the <strong><a href="https://www.npmjs.com/package/eleventy">wrong package</a></strong>. For consistency and accuracy always use <code>npx @11ty/eleventy</code>.</div></div>
+<p>If you’re using a global install of Eleventy, remove <code>npx @11ty/</code> from the beginning of each command, like so:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Global installation</span><br>eleventy</code></pre>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># `npx @11ty/eleventy` is the same as:</span><br>npx @11ty/eleventy <span class="token parameter variable">--input</span><span class="token operator">=</span>. <span class="token parameter variable">--output</span><span class="token operator">=</span>_site</code></pre>
+<p>Read more about <a href="/docs/config/#input-directory"><code>--input</code></a> and <a href="/docs/config/#output-directory"><code>--output</code></a>. Note that setting the input and output directories via a <a href="/docs/config/">config</a> file is more reliable, especially when using tools like <a href="https://docs.netlify.com/cli/get-started/#run-a-local-development-environment"><code>netlify dev</code></a>.</p>
+<p>A hypothetical <code>template.md</code> in the current directory would be rendered to <code>_site/template/index.html</code>. Read more at <a href="/docs/permalinks/">Permalinks</a>.</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Use only a subset of template types</span><br>npx @11ty/eleventy <span class="token parameter variable">--formats</span><span class="token operator">=</span>md,html,ejs</code></pre>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Find out the most up-to-date list of commands (there are more)</span><br>npx @11ty/eleventy <span class="token parameter variable">--help</span></code></pre>
+<h3 id="re-run-eleventy-when-you-save" tabindex="-1">Re-run Eleventy when you save <a class="direct-link" href="#re-run-eleventy-when-you-save">
+				<span class="sr-only" data-pagefind-ignore="">Jump to heading</span>
+				<span aria-hidden="true" data-pagefind-ignore="">#</span>
+			</a></h3>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Boot up a Browsersync web server to apply changes and</span><br><span class="token comment"># refresh automatically. We’ll also --watch for you.</span><br>npx @11ty/eleventy <span class="token parameter variable">--serve</span></code></pre>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Change the web server’s port—use localhost:8081</span><br>npx @11ty/eleventy <span class="token parameter variable">--serve</span> <span class="token parameter variable">--port</span><span class="token operator">=</span><span class="token number">8081</span></code></pre>
+<div class="elv-callout elv-callout-info"><div class="elv-callout-label">INFO:</div><div class="elv-callout-c"><strong>Important Note</strong>: <a href="https://browsersync.io/docs/#requirements">Browsersync requires a <code>&lt;body&gt;</code> tag in your template</a> for live-reload to work properly.</div></div>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Automatically run when input template files change.</span><br><span class="token comment"># Useful if you have your own web server.</span><br>npx @11ty/eleventy <span class="token parameter variable">--watch</span></code></pre>
+<h3 id="quiet-if-the-output-is-too-noisy" tabindex="-1"><code>--quiet</code> if the Output is Too Noisy <a class="direct-link" href="#quiet-if-the-output-is-too-noisy">
+				<span class="sr-only" data-pagefind-ignore="">Jump to heading</span>
+				<span aria-hidden="true" data-pagefind-ignore="">#</span>
+			</a></h3>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Shhhhh—Don’t log so much to the console</span><br>npx @11ty/eleventy <span class="token parameter variable">--quiet</span></code></pre>
+<h3 id="dryrun-to-do-a-little-testing" tabindex="-1"><code>--dryrun</code> to do a Little Testing <a class="direct-link" href="#dryrun-to-do-a-little-testing">
+				<span class="sr-only" data-pagefind-ignore="">Jump to heading</span>
+				<span aria-hidden="true" data-pagefind-ignore="">#</span>
+			</a></h3>
+<p>Runs without writing to the file system. Useful when <a href="/docs/debugging/">debugging</a>.</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Run Eleventy but don’t write any files</span><br>npx @11ty/eleventy <span class="token parameter variable">--dryrun</span></code></pre>
+<h3 id="config-to-change-the-config-file-name" tabindex="-1"><code>--config</code> to Change the Config file name <a class="direct-link" href="#config-to-change-the-config-file-name">
+				<span class="sr-only" data-pagefind-ignore="">Jump to heading</span>
+				<span aria-hidden="true" data-pagefind-ignore="">#</span>
+			</a></h3>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Override the default eleventy project config filename (.eleventy.js)</span><br>npx @11ty/eleventy <span class="token parameter variable">--config</span><span class="token operator">=</span>myeleventyconfig.js</code></pre>
+<h3 id="to-can-output-json" tabindex="-1"><code>--to</code> can output JSON <span data-pagefind-ignore="" class="minilink minilink-addedin" data-uncoerced-version="1.0.0">Added in v1.0.0</span> <a class="direct-link" href="#to-can-output-json">
+				<span class="sr-only" data-pagefind-ignore="">Jump to heading</span>
+				<span aria-hidden="true" data-pagefind-ignore="">#</span>
+			</a></h3>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Output a JSON structure (does not write to the file system)</span><br>npx @11ty/eleventy <span class="token parameter variable">--to</span><span class="token operator">=</span>json<br><br><span class="token comment"># Output a Newline Deliminated JSON structure (does not write to the file system)</span><br>npx @11ty/eleventy <span class="token parameter variable">--to</span><span class="token operator">=</span>ndjson<br><br><span class="token comment"># Default behavior (Output to file system)</span><br>npx @11ty/eleventy <span class="token parameter variable">--to</span><span class="token operator">=</span>fs</code></pre>
+<p>Read more about <a href="https://github.com/ndjson/ndjson-spec">ndjson</a>.</p>
+<h3 id="incremental-for-partial-incremental-builds" tabindex="-1"><code>--incremental</code> for Partial Incremental Builds <a class="direct-link" href="#incremental-for-partial-incremental-builds">
+				<span class="sr-only" data-pagefind-ignore="">Jump to heading</span>
+				<span aria-hidden="true" data-pagefind-ignore="">#</span>
+			</a></h3>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># *Repeat* builds only operate on files that have changed</span><br>npx @11ty/eleventy <span class="token parameter variable">--watch</span> <span class="token parameter variable">--incremental</span><br>npx @11ty/eleventy <span class="token parameter variable">--serve</span> <span class="token parameter variable">--incremental</span><br><br><span class="token comment"># Skip the initial full build with `--ignore-initial`</span><br>npx @11ty/eleventy <span class="token parameter variable">--serve</span> <span class="token parameter variable">--incremental</span> --ignore-initial</code></pre>
+<p>Read more about <a href="/docs/usage/incremental/">incremental builds</a>.</p>
+<h3 id="ignore-initial-to-run-eleventy-without-an-initial-build" tabindex="-1"><code>--ignore-initial</code> to run Eleventy without an Initial Build <span data-pagefind-ignore="" class="minilink minilink-addedin" data-uncoerced-version="2.0.0-canary.25">Added in v2.0.0</span> <a class="direct-link" href="#ignore-initial-to-run-eleventy-without-an-initial-build">
+				<span class="sr-only" data-pagefind-ignore="">Jump to heading</span>
+				<span aria-hidden="true" data-pagefind-ignore="">#</span>
+			</a></h3>
+<p>Be wary of any file changes that happened while Eleventy wasn’t running!</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Don’t build when Eleventy starts, only build on file changes</span><br>npx @11ty/eleventy <span class="token parameter variable">--watch</span> --ignore-initial<br>npx @11ty/eleventy <span class="token parameter variable">--serve</span> --ignore-initial<br>npx @11ty/eleventy <span class="token parameter variable">--serve</span> <span class="token parameter variable">--incremental</span> --ignore-initial</code></pre>
+<h3 id="using-the-same-input-and-output" tabindex="-1">Using the Same Input and Output <a class="direct-link" href="#using-the-same-input-and-output">
+				<span class="sr-only" data-pagefind-ignore="">Jump to heading</span>
+				<span aria-hidden="true" data-pagefind-ignore="">#</span>
+			</a></h3>
+<p>Yes, you can use the same <code>input</code> and <code>output</code> directories, like so:</p>
+<pre class="language-bash"><code class="language-bash"><span class="token comment"># Parse and write Markdown to HTML, respecting directory structure.</span><br>npx @11ty/eleventy <span class="token parameter variable">--input</span><span class="token operator">=</span>. <span class="token parameter variable">--output</span><span class="token operator">=</span>. <span class="token parameter variable">--formats</span><span class="token operator">=</span>md</code></pre>
+<div class="elv-callout elv-callout-warn"><div class="elv-callout-label">WARNING:</div><div class="elv-callout-c">Careful with <code>--formats=html</code> here! If you run eleventy more than once, it’ll try to process the output files too. Read more at the <a href="/docs/languages/html/#using-the-same-input-and-output-directories">HTML template docs</a>.</div></div>
+<!--
+### Example: Process a Single File
+
+```bash
+npx @11ty/eleventy --input=README.md --output=.
+```
+
+Writes to `./README/index.html`.
+-->

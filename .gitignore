@@ -13,7 +13,6 @@ yarn.lock
 
 # App-specific
 cache
-_site/
 node-supporters/
 src/_data/builtwith/
 
